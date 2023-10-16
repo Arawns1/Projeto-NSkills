@@ -1,6 +1,8 @@
 package br.com.itneki.NekiSkills.config;
 
 import br.com.itneki.NekiSkills.domain.Skill;
+import br.com.itneki.NekiSkills.domain.User;
+import br.com.itneki.NekiSkills.dto.AuthDTO;
 import br.com.itneki.NekiSkills.dto.SkillResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +17,11 @@ public class ModelMapperConfig {
             mapper.map(Skill::getId, SkillResponseDTO::setId);
             mapper.map(Skill::getName, SkillResponseDTO::setName);
             mapper.map(Skill::getDescription, SkillResponseDTO::setDescription);
+        });
+
+        modelMapper.typeMap(AuthDTO.class, User.class).addMappings(mapper -> {
+            mapper.map(AuthDTO::getLogin, User::setLogin);
+            mapper.map(AuthDTO::getPassword, User::setPassword);
         });
 
         return modelMapper;
