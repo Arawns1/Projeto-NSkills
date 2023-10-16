@@ -1,5 +1,6 @@
 package br.com.itneki.NekiSkills.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,8 +13,10 @@ import lombok.*;
 @ToString
 public class UserSkill {
     @EmbeddedId
+    @JsonIgnore
     private UserSkillKey id;
 
+    @JsonIgnore
     @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "fk_usr_cd_id")

@@ -28,7 +28,6 @@ public class User {
     @Column(name = "usr_tx_password")
     private String password;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private Set<UserSkill> userSkills;
 }
