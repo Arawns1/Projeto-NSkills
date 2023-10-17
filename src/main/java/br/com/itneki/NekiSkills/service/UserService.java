@@ -1,10 +1,11 @@
 package br.com.itneki.NekiSkills.service;
 
-import br.com.itneki.NekiSkills.domain.Skill;
 import br.com.itneki.NekiSkills.domain.User;
-import br.com.itneki.NekiSkills.dto.SkillResponseDTO;
-import br.com.itneki.NekiSkills.repository.SkillRepository;
+import br.com.itneki.NekiSkills.dto.UserResponseDTO;
+import br.com.itneki.NekiSkills.dto.UserSkillResponseDTO;
 import br.com.itneki.NekiSkills.repository.UserRepository;
+import br.com.itneki.NekiSkills.utils.UtilsMethods;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,26 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public List<User> findAllUsers() {
-        return repository.findAll();
+    @Autowired
+    private ModelMapper modelMapper;
+
+    public List<UserResponseDTO> findAllUsers() {
+        List<User> userList = repository.findAll();
+        return userList.stream()
+                .map(user -> modelMapper.map(user, UserResponseDTO.class))
+                .toList();
     }
 
-    public User findUserById(UUID id){
-        return repository.findById(id)
-                         .orElseThrow(() -> new NoSuchElementException("Error! User not found with id: " + id));
+    public UserResponseDTO findUserById(UUID id){
+       Optional<User> userFound = repository.findById(id);
+
+       if(userFound.isPresent()){
+           return modelMapper.map(userFound, UserResponseDTO.class);
+       }
+       else{
+          throw new NoSuchElementException("Error! User not found with id: " + id);
+       }
+
     }
 
     public User saveUser(User user){
@@ -49,4 +63,5 @@ public class UserService {
         else
             return false;
     }
+
 }

@@ -1,10 +1,11 @@
 package br.com.itneki.NekiSkills.utils;
 
 import br.com.itneki.NekiSkills.domain.Skill;
+import br.com.itneki.NekiSkills.domain.UserSkill;
 import br.com.itneki.NekiSkills.dto.SkillResponseDTO;
+import br.com.itneki.NekiSkills.dto.UserSkillResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -13,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class HandleSkillImageUrl {
+public class UtilsMethods {
     @Autowired
     ModelMapper modelMapper;
 
@@ -34,4 +35,17 @@ public class HandleSkillImageUrl {
         skillResponse.setImageUrl(uri.toString());
         return skillResponse;
     }
+
+    /**
+     * Função responsável por instanciar UserSkillResponse DTO
+     *
+     * @param userSkill
+     * @return instance of UserSkillResponseDTO
+     */
+    public UserSkillResponseDTO userSkillResponseDTOFactory(UserSkill userSkill) {
+        SkillResponseDTO skillResponseDTO = this.fromBinaryToUrl(userSkill.getSkill().getId(), Optional.of(userSkill.getSkill()));
+        Integer skillLevel = userSkill.getLevel();
+        return new UserSkillResponseDTO(skillResponseDTO, skillLevel);
+    }
+
 }

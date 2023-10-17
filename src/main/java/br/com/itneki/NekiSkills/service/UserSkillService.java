@@ -4,13 +4,12 @@ import br.com.itneki.NekiSkills.domain.Skill;
 import br.com.itneki.NekiSkills.domain.User;
 import br.com.itneki.NekiSkills.domain.UserSkill;
 import br.com.itneki.NekiSkills.domain.UserSkillKey;
-import br.com.itneki.NekiSkills.dto.SkillResponseDTO;
 import br.com.itneki.NekiSkills.dto.UserSkillRequestDTO;
 import br.com.itneki.NekiSkills.dto.UserSkillResponseDTO;
 import br.com.itneki.NekiSkills.repository.SkillRepository;
 import br.com.itneki.NekiSkills.repository.UserRepository;
 import br.com.itneki.NekiSkills.repository.UserSkillRepository;
-import br.com.itneki.NekiSkills.utils.HandleSkillImageUrl;
+import br.com.itneki.NekiSkills.utils.UtilsMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class UserSkillService {
     SkillRepository skillRepository;
 
     @Autowired
-    HandleSkillImageUrl handleSkillImageUrl;
+    UtilsMethods utilsMethods;
 
 
     public List<UserSkillResponseDTO> findUserSkillsByUser(UUID userId) {
@@ -43,7 +42,7 @@ public class UserSkillService {
         List<UserSkill> userSkillList = repository.findUserSkillsByUserId(userId);
                                         ;
         return userSkillList.stream()
-                .map(this::userSkillResponseDTOFactory)
+                .map(userSkill -> utilsMethods.userSkillResponseDTOFactory(userSkill))
                 .toList();
     }
 
@@ -64,7 +63,7 @@ public class UserSkillService {
 
         UserSkill userSkillUpdated = repository.save(new UserSkill(userSkillKey, user, skill, userSkillRequestDTO.getSkillLevel()));
 
-        return this.userSkillResponseDTOFactory(userSkillUpdated);
+        return utilsMethods.userSkillResponseDTOFactory(userSkillUpdated);
     }
 
     public UserSkill linkSkillWithUser(UserSkillRequestDTO userSkillRequestDTO) {
@@ -88,15 +87,5 @@ public class UserSkillService {
     }
 
 
-    /**
-     * Função responsável por instanciar UserSkillResponse DTO
-     *
-     * @param userSkill
-     * @return instance of UserSkillResponseDTO
-     */
-    private UserSkillResponseDTO userSkillResponseDTOFactory(UserSkill userSkill) {
-        SkillResponseDTO skillResponseDTO = handleSkillImageUrl.fromBinaryToUrl(userSkill.getSkill().getId(), Optional.of(userSkill.getSkill()));
-        Integer skillLevel = userSkill.getLevel();
-        return new UserSkillResponseDTO(skillResponseDTO, skillLevel);
-    }
+
 }

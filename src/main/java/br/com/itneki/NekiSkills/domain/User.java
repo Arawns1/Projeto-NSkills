@@ -35,6 +35,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private Set<UserSkill> userSkills;
 
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     public User(String login, String password, UserRole role) {

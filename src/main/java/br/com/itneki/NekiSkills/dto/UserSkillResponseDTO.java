@@ -10,6 +10,6 @@ import java.util.UUID;
 @Setter
 @ToString
 public class UserSkillResponseDTO {
-    private SkillResponseDTO skillResponseDTO;
+    private SkillResponseDTO userSkills;
     private Integer skillLevel;
 }

@@ -1,6 +1,7 @@
 package br.com.itneki.NekiSkills.controller;
 
 import br.com.itneki.NekiSkills.domain.User;
+import br.com.itneki.NekiSkills.dto.UserResponseDTO;
 import br.com.itneki.NekiSkills.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,12 +17,12 @@ public class UserController {
     @Autowired
     UserService service;
     @GetMapping
-    public ResponseEntity<List<User>> findAllUsers(){
+    public ResponseEntity<List<UserResponseDTO>> findAllUsers(){
         return new ResponseEntity<>(service.findAllUsers(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findUserById(@PathVariable UUID id){
+    public ResponseEntity<UserResponseDTO> findUserById(@PathVariable UUID id){
         return new ResponseEntity<>(service.findUserById(id), HttpStatus.OK);
     }
 
