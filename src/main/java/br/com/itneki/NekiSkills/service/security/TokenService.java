@@ -23,6 +23,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer("NekiSkills-API")
                     .withSubject(user.getUsername().toString())
+                    .withClaim("role", user.getRole().toString())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException exception) {

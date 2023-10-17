@@ -37,55 +37,47 @@ public class SecurityConfig {
     private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
-                .requestMatchers(new AntPathRequestMatcher("/auth/signup", HttpMethod.POST.toString()))
-                .requestMatchers(new AntPathRequestMatcher("/users"))
-                .requestMatchers(new AntPathRequestMatcher("/auth/login", HttpMethod.POST.toString()))
-                .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
-                .requestMatchers(new AntPathRequestMatcher("/configuration/ui"))
-                .requestMatchers(new AntPathRequestMatcher("/swagger-resources/**"))
-                .requestMatchers(new AntPathRequestMatcher("/configuration/security"))
-                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html"))
-                .requestMatchers(new AntPathRequestMatcher("/webjars/**"))
-                .requestMatchers(new AntPathRequestMatcher("/v3/api-docs/**"));
-    }
-
-    @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
+
+        httpSecurity
                 .cors(Customizer.withDefaults()) //habilita o cors
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
-                .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .headers((headers) ->
+                        headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()))
+                                .authorizeHttpRequests(auth -> auth
+                                        .requestMatchers("/auth/**","/actuator/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                        .anyRequest().authenticated());
+        httpSecurity.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+
+        return httpSecurity.build();
     }
+
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.addAllowedOrigin("*"); // Adicionando o link permitido
-        configuration.setAllowedHeaders(List.of("Authorization", "content-type" ));
+        configuration.setAllowedHeaders(List.of("Authorization", "content-type"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
-    public WebMvcConfigurer corsConfigurer(){
+    public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
