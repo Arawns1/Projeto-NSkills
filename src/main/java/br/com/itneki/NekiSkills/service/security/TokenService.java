@@ -22,7 +22,8 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("NekiSkills-API")
-                    .withSubject(user.getUsername().toString())
+                    .withSubject(user.getUsername())
+                    .withClaim("userId", user.getId().toString())
                     .withClaim("role", user.getRole().toString())
                     .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
