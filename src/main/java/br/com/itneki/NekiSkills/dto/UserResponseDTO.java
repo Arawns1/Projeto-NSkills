@@ -3,7 +3,6 @@ package br.com.itneki.NekiSkills.dto;
 import br.com.itneki.NekiSkills.domain.UserRole;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @NoArgsConstructor

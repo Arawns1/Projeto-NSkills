@@ -2,9 +2,7 @@ package br.com.itneki.NekiSkills.service;
 
 import br.com.itneki.NekiSkills.domain.User;
 import br.com.itneki.NekiSkills.dto.UserResponseDTO;
-import br.com.itneki.NekiSkills.dto.UserSkillResponseDTO;
 import br.com.itneki.NekiSkills.repository.UserRepository;
-import br.com.itneki.NekiSkills.utils.UtilsMethods;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,7 @@ public class UserService {
        Optional<User> userFound = repository.findById(id);
 
        if(userFound.isPresent()){
-           return modelMapper.map(userFound, UserResponseDTO.class);
+           return modelMapper.map(userFound.get(), UserResponseDTO.class);
        }
        else{
           throw new NoSuchElementException("Error! User not found with id: " + id);

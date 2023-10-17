@@ -64,7 +64,8 @@ public class SkillService {
             return repository.save(skill);
         else
             throw new NoSuchElementException("Error! Can't found skill with id: " + id);
-    };
+    }
+
     public boolean deleteSkill(UUID id){
         Optional<Skill> skillFound = repository.findById(id);
         if (skillFound.isPresent())

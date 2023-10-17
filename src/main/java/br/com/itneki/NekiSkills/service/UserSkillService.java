@@ -40,7 +40,6 @@ public class UserSkillService {
                       .orElseThrow(() -> new NoSuchElementException("Error! Cannot find user with id: " + userId));
 
         List<UserSkill> userSkillList = repository.findUserSkillsByUserId(userId);
-                                        ;
         return userSkillList.stream()
                 .map(userSkill -> utilsMethods.userSkillResponseDTOFactory(userSkill))
                 .toList();
@@ -52,7 +51,7 @@ public class UserSkillService {
         Optional<UserSkill> userSkill = repository.findById(userSkillKey);
 
         if (userSkill.isEmpty()){
-            throw new NoSuchElementException("Error! Cannot update UserSkill, id not found: " + userSkillKey.toString());
+            throw new NoSuchElementException("Error! Cannot update UserSkill, id not found: " + userSkillKey);
         }
 
         User user = userRepository.findById(userSkillRequestDTO.getUserId())

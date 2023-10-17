@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +27,10 @@ public class UtilsMethods {
      * @return SkillResponseDTO
      */
     public SkillResponseDTO fromBinaryToUrl(UUID id, Optional<Skill> skill) {
+        if (skill.isEmpty()){
+            throw new NoSuchElementException("Error! Skill cannot be null!");
+        }
+
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/skills/{id}/image")

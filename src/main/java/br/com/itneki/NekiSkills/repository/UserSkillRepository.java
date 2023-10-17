@@ -1,13 +1,11 @@
 package br.com.itneki.NekiSkills.repository;
 
-import br.com.itneki.NekiSkills.domain.User;
 import br.com.itneki.NekiSkills.domain.UserSkill;
 import br.com.itneki.NekiSkills.domain.UserSkillKey;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Repository

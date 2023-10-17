@@ -35,7 +35,7 @@ public class Skill {
     private byte[] image;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "skill")
+    @OneToMany(mappedBy = "skill", cascade=CascadeType.ALL)
     private Set<UserSkill> userSkills;
 
 }
