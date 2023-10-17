@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -32,7 +33,8 @@ public class SecurityFilter extends OncePerRequestFilter {
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+
     }
 
     private String recoverToken(HttpServletRequest request){

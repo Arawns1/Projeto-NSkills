@@ -1,5 +1,6 @@
 package br.com.itneki.NekiSkills.config;
 
+import br.com.itneki.NekiSkills.service.security.AuthEntryPointJwt;
 import br.com.itneki.NekiSkills.service.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -32,13 +33,15 @@ import java.util.List;
 public class SecurityConfig {
     @Autowired
     SecurityFilter securityFilter;
+    @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring()
                 .requestMatchers(new AntPathRequestMatcher("/h2-console/**"))
                 .requestMatchers(new AntPathRequestMatcher("/auth/signup", HttpMethod.POST.toString()))
-                .requestMatchers(new AntPathRequestMatcher("/users", HttpMethod.POST.toString()))
+                .requestMatchers(new AntPathRequestMatcher("/users"))
                 .requestMatchers(new AntPathRequestMatcher("/auth/login", HttpMethod.POST.toString()))
                 .requestMatchers(new AntPathRequestMatcher("/swagger-ui/**"))
                 .requestMatchers(new AntPathRequestMatcher("/configuration/ui"))
@@ -55,6 +58,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults()) //habilita o cors
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(handling -> handling.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated()
                 )

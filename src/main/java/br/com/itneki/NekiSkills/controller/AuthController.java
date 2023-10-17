@@ -8,7 +8,6 @@ import br.com.itneki.NekiSkills.repository.UserRepository;
 import br.com.itneki.NekiSkills.service.security.TokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
