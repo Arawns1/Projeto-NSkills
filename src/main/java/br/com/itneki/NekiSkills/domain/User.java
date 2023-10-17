@@ -21,10 +21,6 @@ import java.util.UUID;
 @ToString
 public class User implements UserDetails {
 
-    //TODO Criar UserDTO passando apenas dados importantes.
-    //TODO Criar Controller para controle de skills/usuários
-    //TODO Inserir Validações
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "usr_cd_id")

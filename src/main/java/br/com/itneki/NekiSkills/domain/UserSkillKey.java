@@ -16,7 +16,7 @@ import java.util.UUID;
 @ToString
 public class UserSkillKey implements Serializable {
     @Column(name = "fk_usr_cd_id")
-    UUID userId;
+    private UUID userId;
     @Column(name = "fk_skill_cd_id")
-    UUID skillId;
+    private UUID skillId;
 }

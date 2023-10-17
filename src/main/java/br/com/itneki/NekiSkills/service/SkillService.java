@@ -3,12 +3,14 @@ package br.com.itneki.NekiSkills.service;
 import br.com.itneki.NekiSkills.domain.Skill;
 import br.com.itneki.NekiSkills.dto.SkillResponseDTO;
 import br.com.itneki.NekiSkills.repository.SkillRepository;
+import br.com.itneki.NekiSkills.utils.HandleSkillImageUrl;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.hibernate.query.sqm.sql.ConversionException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,12 +29,12 @@ public class SkillService {
     private SkillRepository repository;
 
     @Autowired
-    private ModelMapper modelMapper;
+    private HandleSkillImageUrl handleSkillImageUrl;
 
     public List<SkillResponseDTO> findAllSkills(){
         List<Skill> skillList = repository.findAll();
         return skillList.stream()
-                .map(skill -> handleSkillImageUrl(skill.getId(), Optional.of(skill)))
+                .map(skill -> handleSkillImageUrl.fromBinaryToUrl(skill.getId(), Optional.of(skill)))
                 .toList();
     }
 
@@ -40,7 +42,7 @@ public class SkillService {
         Optional<Skill> skill = repository.findById(id);
 
         if(skill.isPresent()){
-            return handleSkillImageUrl(id, skill);
+            return handleSkillImageUrl.fromBinaryToUrl(id, skill);
         }
         else{
             throw new NoSuchElementException("Error! Skill not found with id: " + id);
@@ -91,15 +93,7 @@ public class SkillService {
         }
         return skill;
     }
-    private SkillResponseDTO handleSkillImageUrl(UUID id, Optional<Skill> skill) {
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path("/skills/{id}/image")
-                .buildAndExpand(id)
-                .toUri();
-        SkillResponseDTO skillResponse = modelMapper.map(skill.get(), SkillResponseDTO.class);
-        skillResponse.setImageUrl(uri.toString());
-        return skillResponse;
-    }
 
 }
+
+

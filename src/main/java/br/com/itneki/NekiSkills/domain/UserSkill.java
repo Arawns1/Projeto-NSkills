@@ -28,5 +28,5 @@ public class UserSkill {
     private Skill skill;
 
     @Column(name = "usr_skill_cd_level")
-    private int level;
+    private Integer level;
 }
