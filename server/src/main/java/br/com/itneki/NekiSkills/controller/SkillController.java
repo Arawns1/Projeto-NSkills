@@ -22,8 +22,9 @@ public class SkillController {
     SkillService service;
 
     @GetMapping
-    public ResponseEntity<List<SkillResponseDTO>> findAllSkills(){
-        return new ResponseEntity<>(service.findAllSkills(), HttpStatus.OK);
+    public ResponseEntity<List<SkillResponseDTO>> findAllSkills(
+            @RequestParam(defaultValue = "") String searchKey) {
+        return new ResponseEntity<>(service.findAllSkills(searchKey), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
