@@ -9,6 +9,7 @@ import br.com.itneki.NekiSkills.service.security.TokenService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/auth")
@@ -41,14 +44,17 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity register(@RequestBody @Valid SignUpDTO data){
-        if(this.userRepository.findUserByLogin(data.getLogin()) != null) return ResponseEntity.badRequest().build();
+        if(this.userRepository.findUserByLogin(data.getLogin()) != null){
+            return ResponseEntity.status(409).body("Error: User already registered.");
+        };
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
-        User newUser = new User(data.getLogin(), encryptedPassword, data.getRole());
+        User savedUser = this.userRepository.save(new User(data.getLogin(), encryptedPassword, data.getRole()));
 
-        this.userRepository.save(newUser);
-
-        return ResponseEntity.ok().build();
+        var usernamePassword = new UsernamePasswordAuthenticationToken(savedUser.getLogin(), data.getPassword());
+        var auth = this.authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((User) auth.getPrincipal());
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 
 
