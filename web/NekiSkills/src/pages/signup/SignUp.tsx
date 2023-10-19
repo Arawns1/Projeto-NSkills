@@ -17,7 +17,7 @@ import { api } from "@/services/axios";
 import { setSessionItem } from "@/services/storage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LoginRequest, LoginResponse } from "@/types/authTypes";
+import { SignUpRequest, LoginResponse } from "@/types/authTypes";
 import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
@@ -64,7 +64,7 @@ function UserAuthForm() {
   const { errors, isSubmitting } = formState;
   const navigate = useNavigate();
   async function onSubmit({ email: login, password }: any) {
-    const reqBody: LoginRequest = {
+    const reqBody: SignUpRequest = {
       login,
       password,
       role: "USER",

@@ -2,7 +2,7 @@ import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { LogIn, Eye, EyeOff } from "lucide-react";
 import {
   Card,
@@ -14,10 +14,32 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import { api } from "@/services/axios";
+import { setLocalItem, setSessionItem } from "@/services/storage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { LoginRequest, LoginResponse } from "@/types/authTypes";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  if (authContext === null) {
+    return null;
+  }
+  const { isAuthenticated } = authContext;
+
+  useEffect(() => {
+    isAuthenticated() ? navigate("/home") : "";
+  }, []);
+
   return (
-    <Card className="mx-auto my-32 h-auto xl:w-1/3 lg:w-1/2 p-8 md:p-4">
+    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 p-8 md:p-4">
       <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
         <CardHeader className="flex flex-col space-y-2 text-center">
           <CardTitle className="text-2xl font-semibold tracking-tight">
@@ -29,6 +51,7 @@ export default function Login() {
         </CardHeader>
         <UserAuthForm />
       </div>
+      <ToastContainer />
     </Card>
   );
 }
@@ -36,23 +59,78 @@ export default function Login() {
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 function UserAuthForm({ className }: UserAuthFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [rememberUser, setRememberUser] = useState(false);
+  const navigate = useNavigate();
+  const schema = Yup.object().shape({
+    email: Yup.string()
+      .email("O email deve ser válido")
+      .required("* Campo obrigatório"),
+    password: Yup.string().required("* Campo obrigatório"),
+  });
 
-  async function onSubmit(event: React.SyntheticEvent) {
-    event.preventDefault();
-    setIsLoading(true);
+  const { register, handleSubmit, formState, reset } = useForm({
+    mode: "all",
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+  const { errors, isSubmitting } = formState;
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+  async function onSubmit({ email: login, password }: any) {
+    const reqBody: LoginRequest = {
+      login,
+      password,
+    };
+    console.log(rememberUser);
+    api
+      .post("/auth/login", reqBody)
+      .then((res: LoginResponse) => {
+        rememberUser
+          ? setLocalItem("user", res.data)
+          : setSessionItem("user", res.data);
+
+        toast.success("Cadastro realizado com sucesso, redirecionando...", {
+          position: "bottom-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          rtl: false,
+          pauseOnFocusLoss: false,
+          draggable: false,
+          pauseOnHover: false,
+          theme: "colored",
+        });
+        reset();
+        navigate("/home");
+      })
+      .catch((err) => {
+        toast.error(
+          err.request.status == 404
+            ? "Opa! Parece que você ainda não está cadastrado."
+            : "Aconteceu algum problema ao realizar sua requisição.",
+          {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            rtl: false,
+            pauseOnFocusLoss: false,
+            draggable: false,
+            pauseOnHover: false,
+            theme: "colored",
+          }
+        );
+      });
   }
 
   return (
     <div className={cn("grid gap-6", className)}>
-      <form onSubmit={onSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-1">
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
@@ -63,36 +141,54 @@ function UserAuthForm({ className }: UserAuthFormProps) {
               autoCapitalize="none"
               autoComplete="email"
               autoCorrect="off"
-              disabled={isLoading}
+              disabled={isSubmitting}
+              className={errors.email ? "border-destructive" : ""}
+              {...register("email")}
             />
-          </div>
-          <div className="grid gap-1 relative">
-            <Label className="sr-only" htmlFor="password">
-              Senha
-            </Label>
-
-            <Input
-              id="password"
-              placeholder="Senha"
-              type={showPassword ? "text" : "password"}
-              autoCapitalize="none"
-              autoCorrect="off"
-              disabled={isLoading}
-            />
-            {showPassword ? (
-              <EyeOff
-                className="absolute top-0 bottom-0 my-auto right-3 w-6 h-6 text-gray-500 hover:cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              />
-            ) : (
-              <Eye
-                className="absolute top-0 bottom-0 my-auto right-3 w-6 h-6 text-gray-500 hover:cursor-pointer"
-                onClick={() => setShowPassword(!showPassword)}
-              />
+            {errors.email && (
+              <span className="py-2 text-muted-foreground text-xs leading-none ">
+                {errors.email.message}
+              </span>
             )}
           </div>
-          <Button disabled={isLoading}>
-            {isLoading ? (
+
+          <div className="grid gap-1">
+            <div className="relative">
+              <Label className="sr-only" htmlFor="password">
+                Senha
+              </Label>
+              <Input
+                id="password"
+                placeholder="Senha"
+                type={showPassword ? "text" : "password"}
+                autoCapitalize="none"
+                autoCorrect="off"
+                disabled={isSubmitting}
+                className={errors.password ? "border-destructive " : ""}
+                {...register("password")}
+              />
+              {showPassword ? (
+                <EyeOff
+                  className="absolute top-0 bottom-0 my-auto right-3 w-6 h-6 text-gray-500 hover:cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              ) : (
+                <Eye
+                  className="absolute top-0 bottom-0 my-auto right-3 w-6 h-6 text-gray-500 hover:cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                />
+              )}
+            </div>
+
+            {errors.password && (
+              <span className="py-2 text-muted-foreground text-xs leading-none ">
+                {errors.password.message}
+              </span>
+            )}
+          </div>
+
+          <Button disabled={isSubmitting}>
+            {isSubmitting ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <span>Entrar</span>
@@ -101,7 +197,10 @@ function UserAuthForm({ className }: UserAuthFormProps) {
         </div>
 
         <div className="flex flex-row gap-3 mt-5 w-full items-center justify-start">
-          <Checkbox id="rememberMe" />
+          <Checkbox
+            onCheckedChange={() => setRememberUser(!rememberUser)}
+            id="rememberMe"
+          />
           <label
             htmlFor="rememberMe"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -122,12 +221,12 @@ function UserAuthForm({ className }: UserAuthFormProps) {
         </div>
       </div>
 
-      <Button variant="outline" type="button" disabled={isLoading}>
+      <Button variant="outline" type="button" disabled={isSubmitting}>
         <Link
           to={"/signup"}
           className="flex flex-row gap-2 items-center justify-center"
         >
-          {isLoading ? (
+          {isSubmitting ? (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           ) : (
             <>

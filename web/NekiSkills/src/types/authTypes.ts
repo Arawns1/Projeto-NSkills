@@ -7,5 +7,10 @@ export type LoginResponse = {
 export type LoginRequest = {
   login: string;
   password: string;
+};
+
+export type SignUpRequest = {
+  login: string;
+  password: string;
   role: string;
 };

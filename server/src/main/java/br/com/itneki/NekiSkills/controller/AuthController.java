@@ -34,6 +34,9 @@ public class AuthController {
     @PostMapping("/login")
     @SecurityRequirement(name = "")
     public ResponseEntity login(@RequestBody @Valid AuthDTO data){
+        if(this.userRepository.findUserByLogin(data.getLogin()) == null){
+            return ResponseEntity.status(404).body("Error: User not found.");
+        };
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.getLogin(), data.getPassword());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
