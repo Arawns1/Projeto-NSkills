@@ -2,12 +2,13 @@ import { api } from "@/services/axios";
 import { userSkillRequest, userSkillResponse } from "@/types/skillTypes";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
+import { AuthContextType } from "@/types/authTypes";
 
 type DataContextProps = {
   children: ReactNode;
 };
 
-type DataContextType = {
+export type DataContextType = {
   fetchUserSkills: () => void;
   userSkills: userSkillResponse[] | null;
   linkUserSkill: (data: userSkillRequest) => Promise<void>;
@@ -21,7 +22,7 @@ export const DataProvider = ({ children }: DataContextProps) => {
   const [userSkills, setUserSkills] = useState<userSkillResponse[] | null>(
     null
   );
-  const { getUserId } = useContext(AuthContext);
+  const { getUserId } = useContext(AuthContext) as AuthContextType;
 
   async function fetchUserSkills() {
     api

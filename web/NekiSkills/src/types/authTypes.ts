@@ -1,3 +1,10 @@
+export type AuthContextType = {
+  isAuthenticated: () => unknown;
+  logout: () => void;
+  getToken: () => void;
+  getUserId: () => void;
+};
+
 export type LoginResponse = {
   data: {
     token: string;

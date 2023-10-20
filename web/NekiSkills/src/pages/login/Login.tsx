@@ -24,6 +24,7 @@ import { api } from "@/services/axios";
 import { setLocalItem, setSessionItem } from "@/services/storage";
 import "react-toastify/dist/ReactToastify.css";
 import {
+  AuthContextType,
   LoginFormValues,
   LoginRequest,
   LoginResponse,
@@ -32,12 +33,8 @@ import {
 import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
-  const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-  if (authContext == null) {
-    return null;
-  }
-  const { isAuthenticated } = authContext;
+  const { isAuthenticated } = useContext(AuthContext) as AuthContextType;
 
   useEffect(() => {
     isAuthenticated() ? navigate("/home") : "";

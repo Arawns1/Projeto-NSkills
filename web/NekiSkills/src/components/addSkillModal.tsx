@@ -14,17 +14,13 @@ import {
 import { Skill, userSkillRequest } from "@/types/skillTypes";
 import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
-import { DataContext } from "@/context/DataContext";
+import { DataContext, DataContextType } from "@/context/DataContext";
+import { AuthContextType } from "@/types/authTypes";
 export default function addSkillModal(skill: Skill) {
-  const authContext = useContext(AuthContext);
-  const dataContext = useContext(DataContext);
-
-  if (!authContext || !dataContext) {
-    return null;
-  }
-
-  const { getUserId } = authContext;
-  const { userSkills: userSkillList, linkUserSkill } = dataContext;
+  const { getUserId } = useContext(AuthContext) as AuthContextType;
+  const { userSkills: userSkillList, linkUserSkill } = useContext(
+    DataContext
+  ) as DataContextType;
 
   function handleAddSkill() {
     const userSkillReq: userSkillRequest = {
