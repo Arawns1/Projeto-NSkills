@@ -44,8 +44,8 @@ export default function Login() {
   }, []);
 
   return (
-    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 p-8 md:p-4">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 sm:w-2/3 p-8 md:p-4">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-6 ">
         <CardHeader className="flex flex-col space-y-2 text-center">
           <CardTitle className="text-2xl font-semibold tracking-tight">
             Faça Login

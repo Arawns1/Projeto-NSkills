@@ -26,14 +26,14 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   return (
-    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 pb-10 pt-3 px-2 md:pb-20 md:pt-6 md:px-4 ">
+    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 sm:w-2/3 pb-10 pt-3 px-2 md:pb-20 md:pt-6 md:px-4 ">
       <Link to={"/"}>
         <Button variant="ghost" className="p-0 m-0">
           <ArrowLeft />
         </Button>
       </Link>
 
-      <div className="mx-auto flex w-full flex-col justify-center space-y-3 sm:w-[350px] ">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-3 ">
         <CardHeader className="p-2 flex flex-col space-y-2 text-center">
           <CardTitle className="text-2xl font-semibold tracking-tight">
             Cadastre-se
