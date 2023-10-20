@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import UserSkillCard from "./UserSkillCard";
 import { useContext, useEffect } from "react";

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/services/axios";
 import { Skill } from "@/types/skillTypes";
 import addSkillModal from "./addSkillModal";

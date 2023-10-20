@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import MainCard from "@/components/MainCard";
 import { SkillSearchBar } from "@/components/SkillSearchBar";
-import { ComboboxDemo } from "@/components/Teste";
 import UserSkillList from "@/components/UserSkillList";
 import WelcomeSection from "@/components/WelcomeSection";
 
