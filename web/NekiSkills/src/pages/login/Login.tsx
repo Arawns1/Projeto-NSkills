@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/rules-of-hooks */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { LogIn, Eye, EyeOff } from "lucide-react";
 import {
   Card,
@@ -11,25 +13,28 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { yupResolver } from "@hookform/resolvers/yup/src/yup.js";
+import * as Yup from "yup";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as Yup from "yup";
 import { api } from "@/services/axios";
 import { setLocalItem, setSessionItem } from "@/services/storage";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { LoginRequest, LoginResponse } from "@/types/authTypes";
-import { useNavigate } from "react-router-dom";
+import {
+  LoginFormValues,
+  LoginRequest,
+  LoginResponse,
+} from "@/types/authTypes";
+
 import { AuthContext } from "@/context/AuthContext";
 
 export default function Login() {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
-
-  if (authContext === null) {
+  if (authContext == null) {
     return null;
   }
   const { isAuthenticated } = authContext;
@@ -57,7 +62,6 @@ export default function Login() {
 }
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
-
 function UserAuthForm({ className }: UserAuthFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [rememberUser, setRememberUser] = useState(false);
@@ -79,12 +83,13 @@ function UserAuthForm({ className }: UserAuthFormProps) {
   });
   const { errors, isSubmitting } = formState;
 
-  async function onSubmit({ email: login, password }: any) {
+  async function onSubmit(data: LoginFormValues) {
+    const { email: login, password } = data;
     const reqBody: LoginRequest = {
       login,
       password,
     };
-    console.log(rememberUser);
+
     api
       .post("/auth/login", reqBody)
       .then((res: LoginResponse) => {
@@ -136,7 +141,7 @@ function UserAuthForm({ className }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
-              placeholder="name@example.com"
+              placeholder="nome@email.com"
               type="email"
               autoCapitalize="none"
               autoComplete="email"

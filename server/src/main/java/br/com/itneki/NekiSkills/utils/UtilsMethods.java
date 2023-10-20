@@ -33,7 +33,7 @@ public class UtilsMethods {
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/skills/{id}/image")
+                .path("/skills/image/{id}")
                 .buildAndExpand(id)
                 .toUri();
         SkillResponseDTO skillResponse = modelMapper.map(skill.get(), SkillResponseDTO.class);

@@ -5,6 +5,7 @@ import br.com.itneki.NekiSkills.service.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -44,7 +45,8 @@ public class SecurityConfig {
                 .headers((headers) ->
                         headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()))
                                 .authorizeHttpRequests(auth -> auth
-                                        .requestMatchers("/auth/**","/actuator/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                        .requestMatchers("/auth/**","/actuator/**", "/swagger-ui/**", "/v3/api-docs/**" ).permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/skills/image/**").permitAll()
                                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 

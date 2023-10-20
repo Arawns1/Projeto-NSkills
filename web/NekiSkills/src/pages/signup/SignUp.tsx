@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Card,
   CardDescription,
@@ -8,7 +8,7 @@ import {
 import { Icons } from "@/components/ui/icons";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,14 +17,24 @@ import { api } from "@/services/axios";
 import { setSessionItem } from "@/services/storage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SignUpRequest, LoginResponse } from "@/types/authTypes";
-import { useNavigate } from "react-router-dom";
+import {
+  SignUpRequest,
+  LoginResponse,
+  SignUpFormValues,
+} from "@/types/authTypes";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   return (
-    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 p-8 md:p-4">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-3 sm:w-[350px]">
-        <CardHeader className="flex flex-col space-y-2 text-center">
+    <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 pb-10 pt-3 px-2 md:pb-20 md:pt-6 md:px-4 ">
+      <Link to={"/"}>
+        <Button variant="ghost" className="p-0 m-0">
+          <ArrowLeft />
+        </Button>
+      </Link>
+
+      <div className="mx-auto flex w-full flex-col justify-center space-y-3 sm:w-[350px] ">
+        <CardHeader className="p-2 flex flex-col space-y-2 text-center">
           <CardTitle className="text-2xl font-semibold tracking-tight">
             Cadastre-se
           </CardTitle>
@@ -63,7 +73,9 @@ function UserAuthForm() {
   });
   const { errors, isSubmitting } = formState;
   const navigate = useNavigate();
-  async function onSubmit({ email: login, password }: any) {
+
+  async function onSubmit(data: SignUpFormValues) {
+    const { email: login, password } = data;
     const reqBody: SignUpRequest = {
       login,
       password,
@@ -119,7 +131,7 @@ function UserAuthForm() {
             className={errors.email ? "border-destructive" : ""}
             {...register("email")}
             id="email"
-            placeholder="name@example.com"
+            placeholder="nome@email.com"
             type="email"
             autoCapitalize="none"
             autoComplete="email"

@@ -14,3 +14,21 @@ export type SignUpRequest = {
   password: string;
   role: string;
 };
+
+export type LoginFormValues = {
+  email: string;
+  password: string;
+};
+
+export type SignUpFormValues = {
+  email: string;
+  password: string;
+};
+
+export type Token = {
+  iss: string;
+  sub: string;
+  userId: string;
+  role: string;
+  exp: number;
+};

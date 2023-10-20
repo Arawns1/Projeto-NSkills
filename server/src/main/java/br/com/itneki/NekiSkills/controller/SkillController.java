@@ -32,7 +32,7 @@ public class SkillController {
            return new ResponseEntity<>(service.findSkillById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}/image")
+    @GetMapping("/image/{id}")
     public ResponseEntity<?> findSkillImage(@PathVariable UUID id) {
         Skill skill = service.findSkillImageById(id);
         if (skill == null) {

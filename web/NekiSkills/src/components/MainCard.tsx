@@ -15,8 +15,8 @@ export default function MainCard() {
 
       <CardContent className="p-0 m-0 h-48 w-full flex justify-center ">
         <img
-          className="h-full w-full object-cover object-center rounded-xl"
-          src="https://source.unsplash.com/random"
+          className="h-full w-full object-cover object-center rounded-xl opacity-40 "
+          src="https://source.unsplash.com/random?technology"
           alt="Random Image"
         />
       </CardContent>
