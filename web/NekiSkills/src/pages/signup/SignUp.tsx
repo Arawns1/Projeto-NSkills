@@ -98,7 +98,7 @@ function UserAuthForm() {
           theme: "colored",
         });
         reset();
-        navigate("/home");
+        setTimeout(() => navigate("/home"), 1500);
       })
       .catch((err) => {
         toast.error(
