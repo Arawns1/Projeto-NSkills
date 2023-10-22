@@ -1,11 +1,13 @@
-# Web
+# App
 
 ## Tecnologias Utilizadas
-- React
-- Vite
+- React Native
+- Expo
+- React Navigation
 - Typescript
-- TailwindCSS
-- Shadcn/ui
+- Yup
+- React Hook Form
+- Tamagui
 
 
 ## 💻 Como Rodar?
@@ -19,10 +21,8 @@
 npm install
 ```
 
-3. Rode o comando abaixo para executar o projeto no navegador
+3. Rode o comando abaixo para executar o projeto e então escolha qual forma de visualizar o aplicativo você prefere
 
 ```
-npm run dev
+npx expo start
 ```
-
-Por padrão, a aplicação é iniciada em `http://localhost:5173/`
