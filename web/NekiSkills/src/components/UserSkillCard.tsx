@@ -9,7 +9,8 @@ export default function UserSkillCard({ skill }: { skill: userSkillResponse }) {
   return (
     <>
       <Card
-        className="h-48 w-42 
+        className="h-48 w-48
+                  min-w-48
                     flex 
                     flex-col 
                     px-3 py-5
@@ -28,6 +29,7 @@ export default function UserSkillCard({ skill }: { skill: userSkillResponse }) {
               h-24 w-24
               rounded-full
               z-10
+              object-cover
              "
             src={skill.userSkills.imageUrl}
             alt="Imagem da skill"

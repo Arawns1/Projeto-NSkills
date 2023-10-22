@@ -3,6 +3,7 @@ import { userSkillRequest, userSkillResponse } from "@/types/skillTypes";
 import { ReactNode, createContext, useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { AuthContextType } from "@/types/authTypes";
+import { compararItemsUserSkill } from "@/services/utils";
 
 type DataContextProps = {
   children: ReactNode;
@@ -27,7 +28,10 @@ export const DataProvider = ({ children }: DataContextProps) => {
   async function fetchUserSkills() {
     api
       .get(`/user-skills/user/${getUserId()}`)
-      .then((res) => setUserSkills(res.data))
+      .then((res) => {
+        const UserSkillResponseList: userSkillResponse[] = res.data;
+        setUserSkills(UserSkillResponseList.sort(compararItemsUserSkill));
+      })
       .catch((err) => console.error("Error fetching data:", err));
   }
 

@@ -12,8 +12,9 @@ import { userSkillRequest, userSkillResponse } from "@/types/skillTypes";
 import { Slider } from "./ui/slider";
 import { Label } from "@radix-ui/react-label";
 import { useContext, useState } from "react";
-import { DataContext } from "@/context/DataContext";
+import { DataContext, DataContextType } from "@/context/DataContext";
 import { AuthContext } from "@/context/AuthContext";
+import { AuthContextType } from "@/types/authTypes";
 export default function EditSkillModal({
   open,
   setOpen,
@@ -24,8 +25,10 @@ export default function EditSkillModal({
   skill: userSkillResponse;
 }) {
   const [newSkillLevel, setNewSkillLevel] = useState<number>(0);
-  const { unlinkUserSkill, updateUserSkill } = useContext(DataContext);
-  const { getUserId } = useContext(AuthContext);
+  const { unlinkUserSkill, updateUserSkill } = useContext(
+    DataContext
+  ) as DataContextType;
+  const { getUserId } = useContext(AuthContext) as AuthContextType;
 
   function handleRemoveSkill() {
     unlinkUserSkill(skill.userSkills.id);
@@ -62,8 +65,8 @@ export default function EditSkillModal({
               rounded-full
              "
             />
-            <span className="font-bold text-lg">Minha skill</span>
-            <span className="text-muted-foreground mx-auto">
+            <span className="font-bold text-lg">{skill.userSkills.name}</span>
+            <span className="text-muted-foreground mx-auto text-center text-ellipsis line-clamp-3">
               {skill.userSkills.description}
             </span>
           </div>
@@ -79,7 +82,7 @@ export default function EditSkillModal({
             min={0}
             max={5}
             step={1}
-            defaultValue={skill.skillLevel}
+            defaultValue={[skill.skillLevel]}
             value={[newSkillLevel]}
             onValueChange={(value: number[]) => setNewSkillLevel(value[0])}
             className="cursor-pointer"

@@ -27,7 +27,7 @@ export default function UserSkillList() {
       <Separator />
 
       {userSkills && userSkills?.length > 0 ? (
-        <ul className="flex flex-row gap-x-8 overflow-x-scroll snap-x scrollbar-hide md:scrollbar-hide">
+        <ul className="flex flex-row gap-x-8 overflow-x-scroll snap-x scrollbar-hide sm:scrollbar-default">
           {userSkills.map((skill: userSkillResponse) => (
             <li className="snap-center" key={skill.userSkills.id}>
               <UserSkillCard skill={skill} />
