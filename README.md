@@ -1,5 +1,5 @@
 <h1 align="center">
-        <img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165784893243007007/dark.png?ex=65481cc9&is=6535a7c9&hm=f2c50c4252076858c92f2075605bbe7dd638d2bb023aaf7ee9e302aa78df30e9&=&width=335&height=114"  />
+        <img alt="Banner" title="#Banner" style="object-fit: contain; height:100px;" src="https://media.discordapp.net/attachments/929069726372597815/1165784893243007007/dark.png?ex=65481cc9&is=6535a7c9&hm=f2c50c4252076858c92f2075605bbe7dd638d2bb023aaf7ee9e302aa78df30e9&=&width=335&height=114"  />
 </h1>
 
 # 👨‍💻 Projeto Neki Skills
