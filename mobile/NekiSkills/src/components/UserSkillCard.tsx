@@ -5,10 +5,13 @@ import { CardHeader } from "tamagui";
 import { CardProps } from "tamagui";
 import { userSkillResponse } from "../types/skillTypes";
 import { Image } from "tamagui";
+import { useNavigation } from "@react-navigation/native";
+import { TabTypes } from "../routes/tabs.routes";
 type SkillCardProps = CardProps & {
   skill: userSkillResponse | null;
 };
 export default function UserSkillCard({ skill, ...rest }: SkillCardProps) {
+  const navigation = useNavigation<TabTypes>();
   return (
     <Card
       elevation={"$0.75"}
@@ -17,6 +20,7 @@ export default function UserSkillCard({ skill, ...rest }: SkillCardProps) {
       display="flex"
       justifyContent="space-between"
       overflow="hidden"
+      onPress={() => navigation.navigate("MySkills")}
     >
       <XStack f={1} ai="center" jc="center">
         <Image

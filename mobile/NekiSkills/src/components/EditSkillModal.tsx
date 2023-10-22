@@ -1,5 +1,5 @@
 import { FileEdit, X } from "@tamagui/lucide-icons";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Image,
   Adapt,
@@ -34,6 +34,10 @@ export function EditSkillModal({ userSkill, ...rest }: EditSkillButtonProps) {
   ) as DataContextType;
   const [open, setOpen] = useState<boolean>(false);
   const [nivel, setNivel] = useState<number>(0);
+
+  useEffect(() => {
+    setNivel(userSkill.skillLevel);
+  }, []);
 
   function handleUpdateSkill() {
     const data: userSkillRequest = {
@@ -145,7 +149,7 @@ export function EditSkillModal({ userSkill, ...rest }: EditSkillButtonProps) {
                 Nivel
               </Label>
               <Text fontSize={"$5"} fontWeight={"bold"}>
-                {userSkill?.skillLevel}/5
+                {nivel}/5
               </Text>
             </XStack>
             <SimpleSlider
