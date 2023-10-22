@@ -11,5 +11,4 @@ import lombok.*;
 public class SignUpDTO {
     private String login;
     private String password;
-    private UserRole role;
 }

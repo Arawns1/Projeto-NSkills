@@ -21,7 +21,6 @@ export type LoginRequest = {
 export type SignUpRequest = {
   login: string;
   password: string;
-  role: string;
 };
 
 export type LoginFormValues = {

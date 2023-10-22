@@ -46,7 +46,8 @@ public class SecurityConfig {
                         headers.frameOptions((frameOptions) -> frameOptions.sameOrigin()))
                                 .authorizeHttpRequests(auth -> auth
                                         .requestMatchers("/auth/**","/actuator/**", "/swagger-ui/**", "/v3/api-docs/**" ).permitAll()
-                                        .requestMatchers(HttpMethod.GET, "/skills/image/**").permitAll()
+                                        .requestMatchers(HttpMethod.GET, "/skills/image/**", "/skills").hasAnyRole("ADMIN", "USER")
+                                        .requestMatchers( "/users/**", "/skills/**").hasRole("ADMIN")
                                         .anyRequest().authenticated());
         httpSecurity.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
 

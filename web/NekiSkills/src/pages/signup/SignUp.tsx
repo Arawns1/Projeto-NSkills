@@ -87,8 +87,7 @@ function UserAuthForm() {
     const { email: login, password } = data;
     const reqBody: SignUpRequest = {
       login,
-      password,
-      role: "USER",
+      password
     };
 
     api
