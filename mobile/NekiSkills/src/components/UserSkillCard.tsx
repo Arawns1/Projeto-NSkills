@@ -30,7 +30,9 @@ export default function UserSkillCard({ skill, ...rest }: SkillCardProps) {
       </XStack>
       <CardFooter f={1} ai="flex-start" jc="center" pt="$3">
         <YStack jc="center" ai="center">
-          <SizableText fontSize={"$4"}>{skill?.userSkills.name}</SizableText>
+          <SizableText fontSize={"$4"} style={{ textTransform: "capitalize" }}>
+            {skill?.userSkills.name}
+          </SizableText>
           <SizableText fontSize={"$2"} theme={"alt2"}>
             Nível {skill?.skillLevel}/5
           </SizableText>

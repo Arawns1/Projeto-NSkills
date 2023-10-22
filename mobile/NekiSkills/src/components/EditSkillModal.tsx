@@ -128,7 +128,7 @@ export function EditSkillModal({ userSkill, ...rest }: EditSkillButtonProps) {
               <SizableText fontSize={"$7"} fontWeight={"bold"}>
                 {userSkill?.userSkills.name}
               </SizableText>
-              <SizableText fontSize={"$2"} theme="alt2">
+              <SizableText fontSize={"$2"} theme={"alt2"}>
                 {userSkill?.userSkills.description}
               </SizableText>
             </YStack>
@@ -167,7 +167,7 @@ export function EditSkillModal({ userSkill, ...rest }: EditSkillButtonProps) {
                 aria-label="Close"
                 borderColor={"$red6"}
                 bg={"$red4"}
-                color={"$red6Light"}
+                color={"$red6"}
               >
                 Remover Skill
               </Button>

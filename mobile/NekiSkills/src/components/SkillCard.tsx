@@ -66,20 +66,24 @@ export default function SkillCard({
                 ellipsizeMode="tail"
                 fontSize={"$5"}
                 fontWeight={"bold"}
+                style={{ textTransform: "capitalize" }}
               >
                 {userSkill?.userSkills.name}
               </SizableText>
               <Paragraph
-                theme="alt2"
+                color={"$gray3"}
+                opacity={0.5}
                 numberOfLines={2}
                 ellipsizeMode="tail"
                 fontSize={"$1"}
                 fontWeight={"$1"}
+                style={{ textTransform: "capitalize" }}
               >
                 {userSkill?.userSkills.description}
               </Paragraph>
               <Paragraph
-                theme="alt2"
+                color={"$gray3"}
+                opacity={0.5}
                 numberOfLines={1}
                 ellipsizeMode="tail"
                 fontSize={"$4"}
@@ -124,15 +128,18 @@ export default function SkillCard({
                 ellipsizeMode="tail"
                 fontSize={"$6"}
                 fontWeight={"bold"}
+                style={{ textTransform: "capitalize" }}
               >
                 {skill?.name}
               </SizableText>
               <Paragraph
-                theme="alt2"
+                color={"$gray3"}
+                opacity={0.5}
                 numberOfLines={2}
                 ellipsizeMode="tail"
                 fontSize={"$2"}
                 fontWeight={"$1"}
+                style={{ textTransform: "capitalize" }}
               >
                 {skill?.description}
               </Paragraph>

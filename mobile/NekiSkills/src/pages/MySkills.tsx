@@ -48,12 +48,12 @@ export default function MySkills() {
       ) : (
         <YStack f={1} jc={"center"} ai={"center"} gap={"$2"}>
           <FileQuestion size={"$4"} opacity={0.5} />
-          <SizableText textAlign="center" theme={"alt2"} opacity={0.5}>
+          <SizableText textAlign="center" theme={"alt2"}>
             Opa! Você não adicionou nenhuma skill
           </SizableText>
           <SizableText
             textAlign="center"
-            theme={"alt2"}
+            color={"$gray3"}
             opacity={0.5}
             fontSize={"$2"}
           >

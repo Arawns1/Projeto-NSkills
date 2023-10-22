@@ -26,7 +26,11 @@ export default function StackRoutes() {
   ) as AuthContextType;
 
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       {!isAuthenticated() ? (
         <>
           <Stack.Screen

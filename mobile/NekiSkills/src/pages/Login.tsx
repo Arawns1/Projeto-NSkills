@@ -8,9 +8,10 @@ import {
   XStack,
   H2,
   CheckboxProps,
+  Stack,
 } from "tamagui";
 import { Eye, EyeOff, Check } from "@tamagui/lucide-icons";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import { Link } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import {
@@ -58,6 +59,17 @@ export default function Login() {
 
   return (
     <YStack bg="$backgroundStrong" f={1} jc="center" px={"$5"} gap={"$5"}>
+      <Stack w="100%" px="auto" jc="center" ai="center">
+        <Image
+          style={{
+            width: 190,
+            height: 80,
+            resizeMode: "contain",
+          }}
+          source={require("../../assets/dark.png")}
+        />
+      </Stack>
+
       <H2 mx={"auto"} fontWeight={"600"}>
         Faça seu Login
       </H2>
@@ -65,7 +77,11 @@ export default function Login() {
         <Form onSubmit={handleSubmit(handleLogin)} gap="$5">
           {/*Input Email */}
           <YStack gap={"$2"}>
-            <Label htmlFor="email-input" fontWeight={"500"} fontSize={"$6"}>
+            <Label
+              htmlFor="Login_email-input"
+              fontWeight={"500"}
+              fontSize={"$6"}
+            >
               Email
             </Label>
             <Controller
@@ -73,9 +89,8 @@ export default function Login() {
               name="email"
               render={({ field: { onChange, onBlur } }) => (
                 <Input
-                  id="email-input"
+                  id="Login_email-input"
                   placeholder="exemplo@email.com"
-                  autoCorrect={false}
                   returnKeyType="next"
                   onChangeText={onChange}
                   onBlur={onBlur}
@@ -88,7 +103,11 @@ export default function Login() {
 
           {/*Input Senha */}
           <YStack gap={"$2"}>
-            <Label htmlFor="password-input" fontWeight={"500"} fontSize={"$6"}>
+            <Label
+              htmlFor="Login_password-input"
+              fontWeight={"500"}
+              fontSize={"$6"}
+            >
               Senha
             </Label>
             <Controller
@@ -96,7 +115,7 @@ export default function Login() {
               name="password"
               render={({ field: { onChange, onBlur } }) => (
                 <Input
-                  id="password-input"
+                  id="Login_password-input"
                   placeholder="Sua senha"
                   secureTextEntry={showPassword}
                   autoCorrect={false}

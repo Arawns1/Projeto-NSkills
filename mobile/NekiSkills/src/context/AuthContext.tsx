@@ -12,6 +12,7 @@ import {
   setLocalItem,
 } from "../services/storage";
 import jwt_decode from "jwt-decode";
+import { ToastAndroid } from "react-native";
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -39,7 +40,10 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
       if (rememberCredentials) await setLocalItem("user", token.data.token);
       setUserToken(token.data.token);
     } catch (error) {
-      console.error("Error getting token from login request ", error);
+      ToastAndroid.show(
+        "Error a realizar o Login. Verifique suas credenciais!",
+        ToastAndroid.SHORT
+      );
     }
   }
 
@@ -49,7 +53,10 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
       const token = await api.post("/auth/signup", data);
       setUserToken(token.data.token);
     } catch (error) {
-      console.error("Error getting token from signup request ", error);
+      ToastAndroid.show(
+        "Error a realizar o cadastro. Tente novamente mais tarde!",
+        ToastAndroid.LONG
+      );
     }
   }
 
@@ -65,7 +72,23 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
     }
   }
 
+  function getUsername(): string | void {
+    if (userToken) {
+      const decodedToken: Token = jwt_decode(userToken);
+      const emailIndex = decodedToken.sub.indexOf("@");
+
+      return decodedToken.sub.slice(0, emailIndex);
+    }
+  }
+  function getUserLogin(): string | void {
+    if (userToken) {
+      const decodedToken: Token = jwt_decode(userToken);
+      return decodedToken.sub;
+    }
+  }
+
   function getToken(): string | null {
+    fetchUser();
     return userToken;
   }
 
@@ -78,6 +101,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
           logout,
           getUserId,
           getToken,
+          getUsername,
+          getUserLogin,
         } as AuthContextType
       }
     >

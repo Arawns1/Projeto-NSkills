@@ -16,7 +16,11 @@ export type TabTypes = BottomTabNavigationProp<TabNavigation>;
 export default function TabRoutes() {
   const Tab = createBottomTabNavigator();
   return (
-    <Tab.Navigator screenOptions={{ title: "NekiSkills" }}>
+    <Tab.Navigator
+      screenOptions={{
+        title: "NekiSkills",
+      }}
+    >
       <Tab.Screen
         name="Home"
         component={Home}

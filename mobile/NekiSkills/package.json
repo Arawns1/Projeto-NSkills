@@ -22,8 +22,10 @@
     "@tamagui/dialog": "^1.74.21",
     "@tamagui/font-inter": "^1.74.21",
     "@tamagui/image": "^1.74.21",
+    "@tamagui/list-item": "^1.74.21",
     "@tamagui/lucide-icons": "^1.74.21",
     "@tamagui/slider": "^1.74.21",
+    "@tamagui/switch": "^1.74.21",
     "@tamagui/theme-base": "^1.74.21",
     "@types/bonjour": "^3.5.12",
     "axios": "^1.5.1",
@@ -43,7 +45,8 @@
     "react-native-svg": "13.9.0",
     "react-native-web": "^0.19.9",
     "tamagui": "^1.74.21",
-    "yup": "^1.3.2"
+    "yup": "^1.3.2",
+    "expo-splash-screen": "~0.20.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

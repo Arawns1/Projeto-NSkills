@@ -1,23 +1,16 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Button, H2, Paragraph, Stack, Text, XStack, YStack } from "tamagui";
+import { useNavigation } from "@react-navigation/native";
+import React, { useContext, useEffect } from "react";
+import { Button, H3, Paragraph, Text, YStack } from "tamagui";
+import MainCard from "../components/MainCard";
 import MySkillsList from "../components/MySkillsList";
 import SearchBar from "../components/SearchBar";
-import SkillCard from "../components/SkillCard";
-import { DataContext, DataContextType } from "../context/DataContext";
-import { Skill } from "../types/skillTypes";
-import MainCard from "../components/MainCard";
-import { Link, useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/AuthContext";
 import { StackTypes } from "../routes/stack.routes";
-import { ZStack } from "tamagui";
+import { AuthContextType } from "../types/authTypes";
+import { Appearance } from "react-native";
 
 export default function Home() {
-  const { userSkills, fetchUserSkills } = useContext(
-    DataContext
-  ) as DataContextType;
-
-  useEffect(() => {
-    fetchUserSkills();
-  }, []);
+  const { getUsername } = useContext(AuthContext) as AuthContextType;
 
   const navigation = useNavigation<StackTypes>();
 
@@ -25,7 +18,10 @@ export default function Home() {
     <YStack f={1} px={"$3"} gap={"$6"}>
       {/*Welcome Section*/}
       <YStack pt={"$6"}>
-        <H2 textAlign="left">Olá, Gabriel</H2>
+        <H3 textAlign="left">
+          Olá,{" "}
+          <Text style={{ textTransform: "capitalize" }}>{getUsername()}</Text>
+        </H3>
         <Paragraph theme={"alt2"}>Bem vindo(a) ao NekiSkills</Paragraph>
       </YStack>
 
@@ -42,7 +38,7 @@ export default function Home() {
       </Button>
 
       <MainCard />
-      <MySkillsList userSkills={userSkills} />
+      <MySkillsList />
     </YStack>
   );
 }

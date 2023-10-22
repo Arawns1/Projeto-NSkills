@@ -4,6 +4,8 @@ export type AuthContextType = {
   logout: () => void;
   getUserId: () => string | void;
   getToken: () => string | null;
+  getUsername: () => string | null;
+  getUserLogin: () => string | null;
 };
 
 export type LoginResponse = {

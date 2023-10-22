@@ -1,31 +1,44 @@
+import { useNavigation } from "@react-navigation/native";
 import { FileQuestion } from "@tamagui/lucide-icons";
-import React from "react";
+import { useContext, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Card, H3, Separator, SizableText, Stack, Text, YStack } from "tamagui";
+import {
+  Button,
+  Card,
+  H3,
+  Separator,
+  SizableText,
+  Stack,
+  YStack,
+} from "tamagui";
 import SeeMoreSkills from "../components/SeeMoreSkills";
 import UserSkillCard from "../components/UserSkillCard";
-import { userSkillResponse } from "../types/skillTypes";
-import { useNavigation } from "@react-navigation/native";
+import { AuthContext } from "../context/AuthContext";
+import { DataContext, DataContextType } from "../context/DataContext";
 import { TabTypes } from "../routes/tabs.routes";
-import { Button } from "tamagui";
+import { AuthContextType } from "../types/authTypes";
+import { userSkillResponse } from "../types/skillTypes";
 
-type MySkillListProps = {
-  userSkills: userSkillResponse[] | null;
-};
+export default function MySkillsList() {
+  const { userSkills, fetchUserSkills } = useContext(
+    DataContext
+  ) as DataContextType;
 
-export default function MySkillsList({ userSkills }: MySkillListProps) {
+  useEffect(() => {
+    fetchUserSkills();
+  }, []);
+
   const navigation = useNavigation<TabTypes>();
 
   const ListItemSeparator = () => {
     return <Stack h={15} w={15} />;
   };
-  const userSkillRenderItem = ({
-    item,
-    index,
-  }: {
-    item: any;
+
+  type userSkillRenderItem = {
+    item: userSkillResponse;
     index: number;
-  }) => {
+  };
+  const userSkillRenderItem = ({ item, index }: userSkillRenderItem) => {
     if (index >= 2) {
       return (
         <Button
@@ -66,12 +79,12 @@ export default function MySkillsList({ userSkills }: MySkillListProps) {
       ) : (
         <Card jc="center" ai="center" height={150} gap={"$1.5"}>
           <FileQuestion size={"$4"} opacity={0.5} />
-          <SizableText textAlign="center" theme={"alt2"} opacity={0.5}>
+          <SizableText textAlign="center" color={"$gray3"} opacity={0.5}>
             Opa! Você não adicionou nenhuma skill
           </SizableText>
           <SizableText
             textAlign="center"
-            theme={"alt2"}
+            color={"$gray3"}
             opacity={0.5}
             fontSize={"$2"}
           >
