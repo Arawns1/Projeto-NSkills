@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Form,
   YStack,
   Label,
-  Input as TamaguiInput,
   Checkbox,
   XStack,
   H2,
@@ -12,24 +11,35 @@ import {
 } from "tamagui";
 import { Eye, EyeOff, Check } from "@tamagui/lucide-icons";
 import { TouchableOpacity } from "react-native";
-import { Link, useNavigation } from "@react-navigation/native";
-import { StackTypes } from "../routes/stack.routes";
+import { Link } from "@react-navigation/native";
 import { useForm, Controller } from "react-hook-form";
 import {
+  AuthContextType,
   LoginFormValues,
   LoginRequest,
-  LoginResponse,
 } from "../types/authTypes";
-import { api } from "../services/axios";
 import { Text } from "tamagui";
 import Input from "../components/auth/Input";
+import * as Yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { AuthContext } from "../context/AuthContext";
+
+const schema = Yup.object().shape({
+  email: Yup.string()
+    .email("O email deve ser válido")
+    .required("* Campo obrigatório"),
+  password: Yup.string().required("* Campo obrigatório"),
+});
 
 export default function Login() {
+  const { signInUser } = useContext(AuthContext) as AuthContextType;
+
   const [showPassword, setShowPassword] = useState<boolean>(true);
-  const [rememberCredentials, setRememberCredentials] =
-    useState<boolean>(false);
+  const [rememberUser, setRememberUser] = useState<boolean>(false);
+
   const { control, handleSubmit, formState } = useForm({
     mode: "all",
+    resolver: yupResolver(schema),
     defaultValues: {
       email: "",
       password: "",
@@ -37,21 +47,13 @@ export default function Login() {
   });
   const { errors, isSubmitting } = formState;
 
-  const navigation = useNavigation<StackTypes>();
   const handleLogin = (data: LoginFormValues) => {
     const { email: login, password } = data;
     const reqBody: LoginRequest = {
       login,
       password,
     };
-    // api
-    //   .post("/auth/login", reqBody)
-    //   .then((res: LoginResponse) => {
-    //     console.log(res);
-    //   })
-    //   .catch((err) => console.error(err));
-
-    // navigation.navigate("Home");
+    signInUser(reqBody, rememberUser);
   };
 
   return (
@@ -61,47 +63,40 @@ export default function Login() {
       </H2>
       <YStack>
         <Form onSubmit={handleSubmit(handleLogin)} gap="$5">
-          {/* Input Components */}
+          {/*Input Email */}
           <YStack gap={"$2"}>
-            <Label htmlFor="email" fontWeight={"500"} fontSize={"$6"}>
+            <Label htmlFor="email-input" fontWeight={"500"} fontSize={"$6"}>
               Email
             </Label>
             <Controller
               control={control}
               name="email"
-              rules={{
-                required: { value: true, message: "* Campo obrigatório" },
-                pattern: {
-                  value: /^[a-z0-9.]+@[a-z0-9]+.[a-z]+.([a-z]+)?$/i,
-                  message: "Digite um email válido",
-                },
-              }}
               render={({ field: { onChange, onBlur } }) => (
                 <Input
-                  id="email"
+                  id="email-input"
                   placeholder="exemplo@email.com"
+                  autoCorrect={false}
                   returnKeyType="next"
                   onChangeText={onChange}
                   onBlur={onBlur}
                   errorMessage={errors?.email?.message}
+                  disabled={isSubmitting}
                 />
               )}
             />
-            {console.log(errors)}
           </YStack>
+
+          {/*Input Senha */}
           <YStack gap={"$2"}>
-            <Label htmlFor="password" fontWeight={"500"} fontSize={"$6"}>
+            <Label htmlFor="password-input" fontWeight={"500"} fontSize={"$6"}>
               Senha
             </Label>
             <Controller
               control={control}
               name="password"
-              rules={{
-                required: { value: true, message: "* Campo obrigatório" },
-              }}
               render={({ field: { onChange, onBlur } }) => (
                 <Input
-                  id="password"
+                  id="password-input"
                   placeholder="Sua senha"
                   secureTextEntry={showPassword}
                   autoCorrect={false}
@@ -110,6 +105,7 @@ export default function Login() {
                   onChangeText={onChange}
                   onBlur={onBlur}
                   errorMessage={errors?.password?.message}
+                  disabled={isSubmitting}
                 />
               )}
             />
@@ -127,8 +123,8 @@ export default function Login() {
 
           <CheckBox
             label={"Lembrar-me"}
-            rememberCredentials={rememberCredentials}
-            setRememberCredentials={setRememberCredentials}
+            rememberCredentials={rememberUser}
+            setRememberCredentials={setRememberUser}
           />
 
           <Form.Trigger asChild>

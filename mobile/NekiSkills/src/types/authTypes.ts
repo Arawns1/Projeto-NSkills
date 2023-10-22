@@ -1,3 +1,11 @@
+export type AuthContextType = {
+  signInUser: (data: LoginRequest, rememberCredentials?: boolean) => void;
+  signUpUser: (data: SignUpRequest) => void;
+  logout: () => void;
+  getUserId: () => string | void;
+  getToken: () => string | null;
+};
+
 export type LoginResponse = {
   data: {
     token: string;
@@ -12,7 +20,7 @@ export type LoginRequest = {
 export type SignUpRequest = {
   login: string;
   password: string;
-  role: string;
+  role?: string;
 };
 
 export type LoginFormValues = {
