@@ -36,11 +36,34 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
       return decodedToken.userId;
     }
   }
+  function getUsername(): string | void {
+    const token = getToken();
+    if (token) {
+      const decodedToken: Token = jwt_decode(token);
+      const emailIndex = decodedToken.sub.indexOf("@");
+
+      return decodedToken.sub.slice(0, emailIndex);
+    }
+  }
+  function getUserLogin(): string | void {
+    const token = getToken();
+    if (token) {
+      const decodedToken: Token = jwt_decode(token);
+      return decodedToken.sub;
+    }
+  }
 
   return (
     <AuthContext.Provider
       value={
-        { isAuthenticated, logout, getToken, getUserId } as AuthContextType
+        {
+          isAuthenticated,
+          logout,
+          getToken,
+          getUserId,
+          getUsername,
+          getUserLogin,
+        } as AuthContextType
       }
     >
       {children}

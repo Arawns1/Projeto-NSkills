@@ -16,7 +16,15 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthContext";
 import { DataContext, DataContextType } from "@/context/DataContext";
 import { AuthContextType } from "@/types/authTypes";
-export default function addSkillModal(skill: Skill) {
+
+type AddSkillModalProps = {
+  skill: Skill;
+  setSearchedSkill: React.Dispatch<React.SetStateAction<string>>;
+};
+export default function AddSkillModal({
+  skill,
+  setSearchedSkill,
+}: AddSkillModalProps) {
   const { getUserId } = useContext(AuthContext) as AuthContextType;
   const { userSkills: userSkillList, linkUserSkill } = useContext(
     DataContext
@@ -29,6 +37,7 @@ export default function addSkillModal(skill: Skill) {
       skillLevel: 0,
     };
     linkUserSkill(userSkillReq);
+    setSearchedSkill("");
   }
   function verifyIfUserAlreadyHasSkill() {
     return userSkillList?.some(

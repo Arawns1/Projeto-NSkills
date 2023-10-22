@@ -11,8 +11,13 @@ export default function Header() {
   const { logout } = authContext;
 
   return (
-    <header className="h-20 px-6 py-3 flex items-center justify-between border-b">
-      <h1 className="text-xl font-bold">NekiSkills</h1>
+    <header className="h-20 px-6 py-4 flex items-center justify-between border-b object-contain">
+      <img
+        src="./assets/dark.png"
+        alt="Logo NekiSkills"
+        height={"100%"}
+        width={150}
+      />
       <div className="flex items-center gap-3">
         <Separator orientation="vertical" className="h-6" />
         <Button variant={"outline"} onClick={() => logout()}>

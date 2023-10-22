@@ -22,19 +22,28 @@ import {
   LoginResponse,
   SignUpFormValues,
 } from "@/types/authTypes";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
+  const navigate = useNavigate();
+
   return (
     <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 sm:w-2/3 pb-10 pt-3 px-2 md:pb-20 md:pt-6 md:px-4 ">
-      <Link to={"/"}>
-        <Button variant="ghost" className="p-0 m-0">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-4 relative ">
+        <img
+          src="assets/dark.png"
+          alt="Logo NekiSkills"
+          width={250}
+          className="mx-auto mt-0 mb-0 opacity-95"
+        />
+        <Button
+          variant="ghost"
+          className="p-0 m-0 absolute left-0 top-0"
+          onClick={() => navigate("/")}
+        >
           <ArrowLeft />
         </Button>
-      </Link>
-
-      <div className="mx-auto flex w-full flex-col justify-center space-y-3 ">
-        <CardHeader className="p-2 flex flex-col space-y-2 text-center">
+        <CardHeader className="p-2 flex flex-col space-y-2 text-center ">
           <CardTitle className="text-2xl font-semibold tracking-tight">
             Cadastre-se
           </CardTitle>

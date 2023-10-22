@@ -3,6 +3,8 @@ export type AuthContextType = {
   logout: () => void;
   getToken: () => void;
   getUserId: () => void;
+  getUsername: () => string | null;
+  getUserLogin: () => string | null;
 };
 
 export type LoginResponse = {

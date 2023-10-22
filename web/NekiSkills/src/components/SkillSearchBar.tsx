@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { api } from "@/services/axios";
 import { Skill } from "@/types/skillTypes";
-import addSkillModal from "./addSkillModal";
 import {
   Command,
   CommandEmpty,
@@ -10,6 +9,7 @@ import {
   CommandList,
 } from "./ui/command";
 import { SearchX } from "lucide-react";
+import AddSkillModal from "./AddSkillModal";
 export function SkillSearchBar() {
   const [skillsFound, setSkillsFound] = useState<Skill[] | null>(null);
   const [searchedSkill, setSearchedSkill] = useState("");
@@ -23,7 +23,7 @@ export function SkillSearchBar() {
   const skillsList = skillsFound?.map((skill) => (
     <CommandItem key={skill.id} className="flex flex-row justify-between">
       <span className="capitalize">{skill.name}</span>
-      {addSkillModal(skill)}
+      <AddSkillModal skill={skill} setSearchedSkill={setSearchedSkill} />
     </CommandItem>
   ));
 
@@ -32,6 +32,7 @@ export function SkillSearchBar() {
       <CommandInput
         placeholder="Busque por uma Skill..."
         onValueChange={(e) => setSearchedSkill(e)}
+        value={searchedSkill}
       />
       <CommandList className={searchedSkill ? "" : "hidden"}>
         {skillsFound && skillsList}

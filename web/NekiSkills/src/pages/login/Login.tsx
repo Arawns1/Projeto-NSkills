@@ -42,8 +42,14 @@ export default function Login() {
 
   return (
     <Card className="mx-auto my-32 h-max xl:w-1/3 lg:w-1/2 sm:w-2/3 p-8 md:p-4">
-      <div className="mx-auto flex w-full flex-col justify-center space-y-6 ">
-        <CardHeader className="flex flex-col space-y-2 text-center">
+      <div className="mx-auto flex w-full flex-col justify-center space-y-4 ">
+        <img
+          src="assets/dark.png"
+          alt="Logo NekiSkills"
+          width={250}
+          className="mx-auto mt-3 mb-0 opacity-95"
+        />
+        <CardHeader className="flex flex-col space-y-2 text-center pt-2">
           <CardTitle className="text-2xl font-semibold tracking-tight">
             Faça Login
           </CardTitle>

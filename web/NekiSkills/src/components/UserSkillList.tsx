@@ -3,12 +3,14 @@
 import UserSkillCard from "./UserSkillCard";
 import { useContext, useEffect } from "react";
 import { userSkillResponse } from "@/types/skillTypes";
-import { DataContext } from "@/context/DataContext";
+import { DataContext, DataContextType } from "@/context/DataContext";
 import { Separator } from "@/components/ui/separator";
 import { Card, CardContent } from "./ui/card";
 import { FileQuestion } from "lucide-react";
 export default function UserSkillList() {
-  const { fetchUserSkills, userSkills } = useContext(DataContext);
+  const { fetchUserSkills, userSkills } = useContext(
+    DataContext
+  ) as DataContextType;
 
   useEffect(() => {
     fetchUserSkills();
@@ -24,7 +26,7 @@ export default function UserSkillList() {
       </div>
       <Separator />
 
-      {userSkills?.length > 0 ? (
+      {userSkills && userSkills?.length > 0 ? (
         <ul className="flex flex-row gap-x-8 overflow-x-scroll snap-x scrollbar-hide md:scrollbar-hide">
           {userSkills.map((skill: userSkillResponse) => (
             <li className="snap-center" key={skill.userSkills.id}>
