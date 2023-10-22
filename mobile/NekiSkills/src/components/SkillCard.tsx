@@ -2,20 +2,17 @@ import React, { useContext } from "react";
 import {
   Card,
   CardProps,
+  Image,
   Paragraph,
   SizableText,
-  YStack,
-  Image,
   XStack,
+  YStack,
 } from "tamagui";
-import { Skill, userSkillResponse } from "../types/skillTypes";
-import {} from "tamagui";
 import { DataContext, DataContextType } from "../context/DataContext";
-import RemoveSkillModal from "./RemoveSkillModal";
+import { Skill, userSkillResponse } from "../types/skillTypes";
 import AddSkillModal from "./AddSkillModal";
 import { EditSkillModal } from "./EditSkillModal";
-import { useNavigation } from "@react-navigation/native";
-import { TabTypes } from "../routes/tabs.routes";
+import RemoveSkillModal from "./RemoveSkillModal";
 
 type SkillCardProps = CardProps & {
   skill?: Skill | any;
