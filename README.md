@@ -43,9 +43,9 @@ git clone https://github.com/Arawns1/Projeto-NekiSkills.git
 ```
 2. Acesse a documentação de cada parte do projeto
 
-- [Link para documentação API](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/server)
-- [Link para documentação Web](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/web/NekiSkills)
-- [Link para documentação APP](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/mobile/NekiSkills)
+- [Link para documentação API](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/server/README.md)
+- [Link para documentação Web](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/web/NekiSkills/README.md)
+- [Link para documentação APP](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/mobile/NekiSkills/README.md)
 
 
 
