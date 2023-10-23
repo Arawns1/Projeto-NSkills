@@ -21,6 +21,9 @@
 npm install
 ```
 
+2. Altere o endereço da API para seu IP Local
+https://github.com/Arawns1/Projeto-NekiSkills/blob/14be65d491bb0a62723550e07b544346d9ecddfb/mobile/NekiSkills/src/services/axios.ts#L6-L9
+
 3. Rode o comando abaixo para executar o projeto e então escolha qual forma de visualizar o aplicativo você prefere
 
 ```
