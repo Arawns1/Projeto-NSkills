@@ -19,7 +19,7 @@
 npm install
 ```
 
-3. Rode o comando abaixo para executar o projeto no navegador
+2. Rode o comando abaixo para executar o projeto no navegador
 
 ```
 npm run dev

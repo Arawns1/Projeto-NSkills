@@ -1,5 +1,5 @@
 <h1 align="center">
-        <img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165784893243007007/dark.png?ex=65481cc9&is=6535a7c9&hm=f2c50c4252076858c92f2075605bbe7dd638d2bb023aaf7ee9e302aa78df30e9&=&width=335&height=114"  />
+        <img alt="Banner" title="#Banner" style="object-fit: contain; height:100px;" src="https://media.discordapp.net/attachments/929069726372597815/1165784893243007007/dark.png?ex=65481cc9&is=6535a7c9&hm=f2c50c4252076858c92f2075605bbe7dd638d2bb023aaf7ee9e302aa78df30e9&=&width=335&height=114"  />
 </h1>
 
 # 👨‍💻 Projeto Neki Skills
@@ -32,7 +32,7 @@ O principal objetivo deste projeto foi a criação de um site, aplicativo e API 
 ## 🌐 Web
 <img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165787523721732146/screencapture-localhost-5173-home-2023-10-22-20_02_26.png?ex=65481f3c&is=6535aa3c&hm=04d8d30f5fc2e6264b1ce567ee456b4d4ba34bcf517a44b95766138f168468c1&=&width=895&height=462"  />
 <img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165787524078243900/screencapture-localhost-5173-2023-10-22-19_58_51.png?ex=65481f3d&is=6535aa3d&hm=1ed26f9ac9e90a9f4c55d6a2bb331a17178ff327e5d63930af379a2215819a65&=&width=834&height=463"  />
-<img alt="Banner" title="#Banner" style="object-fit: contain; width:260px; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165787524321521694/Screenshot_1.jpg?ex=65481f3d&is=6535aa3d&hm=68e8cda92800e0459f4cc92fe53a363758229e7aaa86735a78e600678b1e07ba&=&width=202&height=441"  />
+<img alt="Banner" title="#Banner" style="object-fit: contain; height:250px;" src="https://media.discordapp.net/attachments/929069726372597815/1165787524321521694/Screenshot_1.jpg?ex=65481f3d&is=6535aa3d&hm=68e8cda92800e0459f4cc92fe53a363758229e7aaa86735a78e600678b1e07ba&=&width=202&height=441"  />
 
 
 ## 💻 Como Rodar?
@@ -43,9 +43,9 @@ git clone https://github.com/Arawns1/Projeto-NekiSkills.git
 ```
 2. Acesse a documentação de cada parte do projeto
 
-- [Link para documentação API](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/server)
-- [Link para documentação Web](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/web/NekiSkills)
-- [Link para documentação APP](https://github.com/Arawns1/Projeto-NekiSkills/tree/main/mobile/NekiSkills)
+- [Link para documentação API](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/server/README.md)
+- [Link para documentação Web](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/web/NekiSkills/README.md)
+- [Link para documentação APP](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/mobile/NekiSkills/README.md)
 
 
 
