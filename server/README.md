@@ -32,6 +32,8 @@ Para mudar as credenciais padrões ou a skills, basta editar o arquivo [Import.s
 Logo após a inicialização, é recomendado atualizar para `Update` a propriedade `spring.jpa.hibernate.ddl-auto
 `, encontrada no [Application.Properties](https://github.com/Arawns1/Projeto-NekiSkills/blob/main/server/src/main/resources/application.properties)
 
+⚠️ Lembre-se de atualizar a conexão com seu banco local postgres no arquivo Application.Properties
+
 ### Demais usos
 
 Basta iniciar a aplicação normalmente, utilizando a IDE preferida.
